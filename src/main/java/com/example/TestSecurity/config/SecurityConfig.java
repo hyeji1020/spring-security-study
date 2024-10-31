@@ -22,6 +22,14 @@ public class SecurityConfig {
                         .anyRequest().authenticated()
                 );
 
+        http
+                .formLogin((auth) -> auth.loginPage("/login")   // 로그인 페이지 경로 지정
+                        .loginProcessingUrl("/loginProc")       // 로그인 처리 URL 지정
+                        .permitAll()                            // 로그인 페이지는 인증 없이 접근 가능하도록 설정
+                );
+
+        http
+                .csrf((auth) -> auth.disable());
 
         return http.build();
     }
