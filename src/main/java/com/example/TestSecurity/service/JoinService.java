@@ -15,16 +15,20 @@ public class JoinService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void joinProcess(JoinRequest joinRequest) {
+
+        String username = joinRequest.getUsername();
+        String password = joinRequest.getPassword();
+
         //username 중복 검사
-        boolean isUser = userRepository.existsByUsername(joinRequest.getUsername());
+        boolean isUser = userRepository.existsByUsername(username);
         if (isUser) {
             return;
         }
 
         UserEntity data = new UserEntity();
 
-        data.setUsername(joinRequest.getUsername());
-        data.setPassword(bCryptPasswordEncoder.encode(joinRequest.getPassword()));
+        data.setUsername(username);
+        data.setPassword(bCryptPasswordEncoder.encode(password));
         data.setRole("ROLE_ADMIN");
 
         userRepository.save(data);

@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequiredArgsConstructor
@@ -14,19 +15,13 @@ public class JoinController {
 
     private final JoinService joinService;
 
-    @GetMapping("/join")
-    public String joinP() {
+    @PostMapping("/join")
+    public String joinP(@RequestBody JoinRequest request) {
 
-        return "join";
+        System.out.println(request.getUsername());
+        joinService.joinProcess(request);
+
+        return "ok";
     }
 
-    @PostMapping("/joinProc")
-    public String joinProcess(JoinRequest joinRequest) {
-
-        System.out.println(joinRequest.getUsername());
-
-        joinService.joinProcess(joinRequest);
-
-        return "redirect:/login";
-    }
 }
